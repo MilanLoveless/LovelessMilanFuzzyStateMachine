@@ -1,5 +1,5 @@
 // CORE.AI.FuzzyStateMachine.h
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 
 #pragma once
 #include <vector>
@@ -11,43 +11,40 @@ class FuzzyStateMachine;
 class NODE;
 class LINK;
 
-typedef FUZZY (*TRANSITION_EVALUATOR)(FuzzyStateMachine* pMachine, char *name1, char *name2);
+typedef FUZZY (*TRANSITION_EVALUATOR)(FuzzyStateMachine* pMachine, char* name1, char* name2);
 
-class LINK
-{
+class LINK {
 public:
 	TRANSITION_EVALUATOR pEvalFunc;
 	NODE *pDestination;
 	FUZZY zRecommendation;
 };
 
-class NODE
-{
+class NODE {
 public:
 	NODE();
 	void AddLink(LINK *pLink);
-	NODE *RunOneStep();
+	NODE* RunOneStep();
 
 	char *name;
 	FuzzyStateMachine *subMachine;
 	vector<LINK*> _Links;
 };
 
-class FuzzyStateMachine
-{
+class FuzzyStateMachine {
 public:
 	FuzzyStateMachine();
 
-	void AddNode(char *name, FuzzyStateMachine* subMachine);
-	void AddLink(char *name1, char *name2, TRANSITION_EVALUATOR pEvalFunc);
+	void AddNode(char* name, FuzzyStateMachine* subMachine);
+	void AddLink(char* name1, char *name2, TRANSITION_EVALUATOR pEvalFunc);
 
-	NODE* FindNode(char *name);
+	NODE* FindNode(char* name);
 
 	char* GetCurrentStateName();
 
 	void RunOneStep();
 
 private:
-	NODE *pCurrentNode;
+	NODE* pCurrentNode;
 	vector<NODE*> _Nodes;
 };
